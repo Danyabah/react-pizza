@@ -1,0 +1,54 @@
+@import "../_variables.scss";
+@mixin mobile {
+  @media screen and (max-width: 420px) {
+    @content;
+  }
+}
+@mixin tablet {
+  @media screen and (max-width: 960px) {
+    @content;
+  }
+}
+.categories {
+  @include tablet {
+    width: 100%;
+  }
+  ul {
+    display: flex;
+    @include mobile {
+      font-size: 15px;
+    }
+
+    @include tablet {
+      overflow-x: scroll;
+      padding-bottom: 10px;
+    }
+
+    li {
+      background-color: #f9f9f9;
+      padding: 13px 30px;
+      border-radius: 30px;
+      margin-right: 10px;
+      font-weight: bold;
+      @include mobile {
+        padding: 10px 20px;
+      }
+      cursor: pointer;
+      transition: background-color 0.1s ease-in-out;
+      @include noselect();
+
+      &:hover {
+        background-color: darken(#f9f9f9, 2%);
+      }
+
+      &:active {
+        background-color: darken(#f9f9f9, 5%);
+      }
+
+      &.active {
+        background-color: #282828;
+        color: #fff;
+      }
+    }
+  }
+}

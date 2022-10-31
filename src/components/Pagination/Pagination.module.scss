@@ -1,0 +1,52 @@
+.root {
+  :global {
+    .previous,
+    .next {
+      a {
+        background-color: #fe5f1e;
+        color: white;
+        &:hover {
+          background-color: #c44918;
+        }
+      }
+    }
+    .disabled {
+      a {
+        background-color: #cac9c9;
+        color: white;
+        border: 1px solid #cac9c9;
+        cursor: default;
+        &:hover {
+          background-color: #cac9c9;
+        }
+      }
+    }
+    .selected {
+      a {
+        background-color: #fe5f1e;
+        color: white;
+      }
+    }
+  }
+
+  li {
+    display: inline-flex;
+
+    a {
+      user-select: none;
+      text-align: center;
+      width: 45px;
+      height: 45px;
+      padding: 10px;
+      border: 1px solid #fe5f1e;
+      border-radius: 30px;
+      cursor: pointer;
+      font-weight: bold;
+      margin-right: 10px;
+      &:hover {
+        background-color: #fe5f1e;
+        color: white;
+      }
+    }
+  }
+}

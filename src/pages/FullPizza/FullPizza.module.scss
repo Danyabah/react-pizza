@@ -1,0 +1,142 @@
+@mixin mobile {
+  @media screen and (max-width: 546px) {
+    @content;
+  }
+}
+@mixin minitablet {
+  @media screen and (max-width: 788px) {
+    @content;
+  }
+}
+@mixin tablet {
+  @media screen and (max-width: 960px) {
+    @content;
+  }
+}
+.root {
+  display: flex;
+  justify-content: center;
+  column-gap: 200px;
+  position: relative;
+  @include minitablet {
+    margin-top: 50px;
+  }
+
+  @include tablet {
+    column-gap: 40px;
+  }
+  @include mobile {
+    align-items: flex-start;
+    padding-bottom: 50px;
+    column-gap: 20px;
+    align-items: baseline;
+  }
+  .leftSide {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    h2 {
+      margin-bottom: 30px;
+      font-weight: bold;
+      @include tablet {
+        font-size: 22px;
+      }
+      @include mobile {
+        margin-bottom: 15px;
+      }
+      @include mobile {
+        font-size: 17px;
+        line-height: normal;
+        text-align: center;
+      }
+    }
+    img {
+      max-width: 300px;
+      margin-bottom: 30px;
+      @include tablet {
+        max-width: 250px;
+      }
+      @include mobile {
+        max-width: 150px;
+        margin-bottom: 15px;
+        position: relative;
+        left: 5px;
+      }
+    }
+    div {
+      font-size: 25px;
+      font-weight: bold;
+      @include mobile {
+        font-size: 20px;
+      }
+    }
+    .button {
+      position: absolute;
+      left: 20px;
+      top: -50px;
+      font-size: 18px;
+      @include tablet {
+        top: -40px;
+      }
+      @include minitablet {
+        top: -40px;
+      }
+      @include mobile {
+        top: -50px;
+      }
+      a {
+        span {
+          @include mobile {
+            font-size: 17px;
+          }
+        }
+      }
+    }
+  }
+  .rightSide {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    div {
+      font-size: 25px;
+      font-weight: bold;
+      @include mobile {
+        font-size: 20px;
+      }
+
+      li {
+        &:first-child {
+          margin-top: 20px;
+          @include mobile {
+            margin-top: 15px;
+          }
+        }
+        font-size: 20px;
+        font-weight: normal;
+        list-style: circle;
+        @include mobile {
+          font-size: 15px;
+        }
+      }
+      margin-bottom: 20px;
+      @include mobile {
+        margin-bottom: 13px;
+      }
+    }
+    .rating {
+      display: flex;
+      flex-wrap: nowrap;
+      div {
+        display: flex;
+        flex-wrap: nowrap;
+      }
+      i {
+        @include mobile {
+          font-size: 15px;
+        }
+      }
+    }
+  }
+}

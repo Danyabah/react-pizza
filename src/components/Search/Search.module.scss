@@ -1,0 +1,45 @@
+@mixin mobile {
+  @media screen and (max-width: 590px) {
+    @content;
+  }
+}
+@mixin tablet {
+  @media screen and (max-width: 960px) {
+    @content;
+  }
+}
+@mixin laptop {
+  @media screen and (max-width: 1200px) {
+    @content;
+  }
+}
+@mixin minpc {
+  @media screen and (max-width: 1350px) {
+    @content;
+  }
+}
+.root {
+  position: relative;
+  right: 175px;
+  @include minpc {
+    right: 100px;
+  }
+  @include laptop {
+    right: 0px;
+  }
+  input {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 12px 20px;
+    width: 300px;
+    border-radius: 10px;
+    font-size: 16px;
+    transition: all 0.15s ease-in-out;
+  }
+  i {
+    position: absolute;
+    right: 6px;
+    top: 9px;
+    color: rgba(0, 0, 0, 0.26);
+    font-size: 23px;
+  }
+}
