@@ -1,10 +1,9 @@
-import React from "react";
-import { useSelector, useDispatch } from "react-redux";
 import { changeCategory } from "../Redux/Slices/filterSlice";
+import { useAppDispatch, useAppSelector } from "../Redux/store";
 
 export default function Categories() {
-  const currentCategory = useSelector((state) => state.filter.category);
-  const dispatch = useDispatch();
+  const currentCategory = useAppSelector((state) => state.filter.category);
+  const dispatch = useAppDispatch();
 
   const categories = [
     "Все",

@@ -3,21 +3,23 @@ import Sort, { sortNames } from "../components/Sort";
 import Categories from "../components/Categories";
 import PizzaBlock from "../components/PizzaBlock";
 import PizzaSkeleton from "../components/PizzaSkeleton";
-import { useDispatch, useSelector } from "react-redux";
 import qs from "qs";
 import { useNavigate } from "react-router-dom";
 import { setFilters } from "../Redux/Slices/filterSlice";
 import { fetchPizzas } from "../Redux/Slices/pizzaSlice";
+import { useAppDispatch, useAppSelector } from "../Redux/store";
 
 export default function Home() {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const isSearch = useRef(false);
   const isMounted = useRef(false);
 
-  const filterInfo = useSelector((state) => state.filter);
-  const search = useSelector((state) => state.search.search);
-  const { items, status } = useSelector((state) => state.pizza);
+  const filterInfo = useAppSelector((state) => state.filter);
+
+  const search = useAppSelector((state) => state.search.search);
+
+  const { items, status } = useAppSelector((state) => state.pizza);
 
   const { category, sort, order } = filterInfo;
 
@@ -39,6 +41,11 @@ export default function Home() {
       navigate(`?${queryString}`);
     }
     isMounted.current = true;
+
+    // TODO: возможно ошибка
+    if (!window.location.search) {
+      getPizzas();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sort, order, category]);
 
@@ -46,10 +53,18 @@ export default function Home() {
   useEffect(() => {
     if (window.location.search) {
       const params = qs.parse(window.location.search.substring(1));
-      const category = params.category;
+      const category = Number(params.category);
       const sort = sortNames.find((obj) => obj.value === params.sort);
       const order = sortNames.find((obj) => obj.order === params.order);
-      dispatch(setFilters({ category, sort, order }));
+
+      dispatch(
+        setFilters({
+          category,
+          sort: sort ? sort.value : "rating",
+          order: order ? order.order : "desc",
+        })
+      );
+
       isSearch.current = true;
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -68,10 +83,10 @@ export default function Home() {
   const skeletons = [...new Array(6)].map((_, i) => <PizzaSkeleton key={i} />);
 
   const pizzas = items
-    .filter((item) => {
+    .filter((item: any) => {
       return item.title.toLowerCase().includes(search.toLowerCase());
     })
-    .map((obj) => {
+    .map((obj: any) => {
       return <PizzaBlock key={obj.id} {...obj} />;
     });
 

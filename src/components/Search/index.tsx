@@ -2,13 +2,13 @@ import React, { useCallback, useRef, useState } from "react";
 import styles from "./Search.module.scss";
 import debounce from "lodash.debounce";
 
-import { useDispatch } from "react-redux";
 import { setSearch } from "../../Redux/Slices/searchSlice";
+import { useAppDispatch } from "../../Redux/store";
 
 export default function Search() {
-  const [value, setValue] = useState("");
-  const dispatch = useDispatch();
-  const inputRef = useRef();
+  const [value, setValue] = useState<string>("");
+  const dispatch = useAppDispatch();
+  const inputRef = useRef<HTMLInputElement>(null);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const memoSearch = useCallback(
@@ -21,10 +21,10 @@ export default function Search() {
   const clear = () => {
     setValue("");
     dispatch(setSearch(""));
-    inputRef.current.focus();
+    inputRef.current?.focus();
   };
 
-  const onChangeInput = (e) => {
+  const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
     memoSearch(e.target.value);
   };

@@ -1,11 +1,20 @@
-import React from "react";
-import { useDispatch, useSelector } from "react-redux";
 import {
   addItem,
   decrement,
   deleteItem,
   selectCurrentPizza,
 } from "../Redux/Slices/cartSlice";
+import { useAppDispatch, useAppSelector } from "../Redux/store";
+
+type propsCartItem = {
+  id: string;
+  imageUrl: string;
+  price: number;
+  title: string;
+  type: string;
+  count: number;
+  size: number;
+};
 
 export default function CartItem({
   id,
@@ -15,26 +24,24 @@ export default function CartItem({
   type,
   count,
   size,
-}) {
-  const currentPizza = useSelector(selectCurrentPizza(id));
+}: propsCartItem) {
+  const currentPizza = useAppSelector(selectCurrentPizza(id));
+  const dispatch = useAppDispatch();
 
-  function tryDelete(id) {
+  function tryDelete(id: string) {
     if (
       window.confirm(
-        `Вы уверены что хотите удалить пиццу "${currentPizza.title}" из корзины?`
+        `Вы уверены что хотите удалить пиццу "${currentPizza?.title}" из корзины?`
       )
     ) {
       dispatch(deleteItem({ id }));
     }
   }
 
-  function decrementPizza(id) {
-    if (currentPizza.count > 1) {
-      dispatch(decrement({ id }));
-    } else tryDelete(id);
+  function decrementPizza(id: string) {
+    dispatch(decrement({ id }));
   }
 
-  const dispatch = useDispatch();
   return (
     <div className="cart__item">
       <div className="cart__item-img">
@@ -47,7 +54,8 @@ export default function CartItem({
         </p>
       </div>
       <div className="cart__item-count">
-        <div
+        <button
+          disabled={count === 1}
           onClick={() => decrementPizza(id)}
           className="button button--outline button--circle cart__item-count-minus"
         >
@@ -67,7 +75,7 @@ export default function CartItem({
               fill="#EB5A1E"
             />
           </svg>
-        </div>
+        </button>
         <b>{count}</b>
         <div
           onClick={() => dispatch(addItem({ id }))}

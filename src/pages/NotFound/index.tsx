@@ -1,4 +1,3 @@
-import React from "react";
 import styles from "./NorFound.module.scss";
 
 export default function NotFound() {

@@ -1,19 +1,29 @@
 import { createSlice } from "@reduxjs/toolkit";
+import calculatePriceAndCount from "../../utils/calcPriceCount";
+import getLSData from "../../utils/getLSData";
+import { RootState } from "../store";
 
-const initialState = {
-  totalPrice: 0,
-  items: [],
-  totalCount: 0,
+export type item = {
+  id: string;
+  imageUrl: string;
+  price: number;
+  title: string;
+  type: string;
+  count: number;
+  size: number;
 };
 
-function calculatePriceAndCount(state) {
-  state.totalPrice = state.items.reduce((sum, obj) => {
-    return sum + obj.price * obj.count;
-  }, 0);
-  state.totalCount = state.items.reduce((sum, obj) => {
-    return sum + obj.count;
-  }, 0);
+interface cartSliceState {
+  totalPrice: number;
+  totalCount: number;
+  items: item[];
 }
+
+const initialState: cartSliceState = {
+  totalPrice: getLSData().totalPrice,
+  items: getLSData().items,
+  totalCount: getLSData().totalCount,
+};
 
 export const cartSlice = createSlice({
   name: "cart",
@@ -49,7 +59,7 @@ export const cartSlice = createSlice({
   },
 });
 
-export const selectCurrentPizza = (id) => (state) =>
+export const selectCurrentPizza = (id: string) => (state: RootState) =>
   state.cart.items.find((obj) => obj.id === id);
 
 export const { addItem, decrement, deleteItem, clearCart } = cartSlice.actions;

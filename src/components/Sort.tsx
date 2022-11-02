@@ -1,29 +1,30 @@
 import React, { useState, useRef, useEffect } from "react";
 
-import { useDispatch } from "react-redux";
 import { changeSort } from "../Redux/Slices/filterSlice";
+import { sortState } from "../Redux/Slices/filterSlice";
+import { useAppDispatch } from "../Redux/store";
 
-export const sortNames = [
+export const sortNames: sortState[] = [
   { name: "популярности ", value: "rating", order: "desc" },
   { name: "цене (▲)", value: "price", order: "asc" },
   { name: "цене (▼)", value: "price", order: "desc" },
   { name: "алфавиту ", value: "title", order: "asc" },
 ];
 export default function Sort() {
-  const dispatch = useDispatch();
-  const sortRef = useRef();
+  const dispatch = useAppDispatch();
+  const sortRef = useRef<HTMLDivElement>(null);
   const [showPopup, setShowPopup] = useState(false);
   const [selectedSort, setSelectedSort] = useState(0);
 
-  function selectSort(i) {
+  function selectSort(i: number) {
     setSelectedSort(i);
     setShowPopup(false);
     dispatch(changeSort(sortNames[i]));
   }
 
   useEffect(() => {
-    const handleClick = (event) => {
-      if (!event.path.includes(sortRef.current)) {
+    const handleClick = (event: MouseEvent) => {
+      if (sortRef.current && !event.composedPath().includes(sortRef.current)) {
         setShowPopup(false);
       }
     };

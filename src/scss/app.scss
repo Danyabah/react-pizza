@@ -251,7 +251,7 @@ body {
         @media screen and (max-width: 420px) {
           font-size: 14px;
           line-height: normal;
-          min-width: 150px;
+          min-width: 136px;
           margin-left: 25px;
         }
       }
@@ -293,6 +293,20 @@ body {
       }
 
       &-minus {
+        &:disabled {
+          opacity: 0.4;
+          border-color: #787878;
+
+          &:active {
+            transform: none;
+          }
+          &:hover {
+            background-color: transparent;
+            svg path {
+              fill: #787878;
+            }
+          }
+        }
         svg {
           path:first-of-type {
             display: none;

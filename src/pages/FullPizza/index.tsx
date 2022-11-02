@@ -1,12 +1,20 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import styles from "./FullPizza.module.scss";
 import { Link } from "react-router-dom";
 
 export default function FullPizza() {
-  const [pizza, setPizza] = useState("");
+  const [pizza, setPizza] = useState<{
+    imageUrl: string;
+    title: string;
+    price: number;
+    types: number[];
+    sizes: number[];
+    rating: number;
+  }>({ imageUrl: "", title: "", price: 0, types: [], sizes: [], rating: 0 });
+
   const navigate = useNavigate();
   const { id } = useParams();
   // TODO: Типы и сантиметры
@@ -25,6 +33,7 @@ export default function FullPizza() {
     }
 
     fetchPizzas();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const { imageUrl, title, price, types, sizes, rating } = pizza;

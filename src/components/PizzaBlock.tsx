@@ -1,7 +1,18 @@
-import React, { useRef, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useRef, useState } from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { addItem, selectCurrentPizza } from "../Redux/Slices/cartSlice";
+import { useAppDispatch } from "../Redux/store";
+
+export type propsPizza = {
+  id: string;
+  imageUrl: string;
+  price: number;
+  rating: number;
+  sizes: number[];
+  title: string;
+  types: number[];
+};
 
 export default function PizzaBlock({
   id,
@@ -11,27 +22,29 @@ export default function PizzaBlock({
   sizes,
   title,
   types,
-}) {
+}: propsPizza) {
   const [activeTypeIndex, setActiveTypeIndex] = useState(0);
 
-  const typeRef = useRef(0);
-  const sizeRef = useRef(0);
+  const typeRef = useRef<HTMLUListElement>(null);
+  const sizeRef = useRef<HTMLUListElement>(null);
 
   const [activeSize, setActiveSize] = useState(0);
   const typeNames = ["тонкое", "традиционное"];
 
   const currentPizza = useSelector(selectCurrentPizza(id));
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   // TODO разделить разные размеры и типы теста
   function handleAddItem() {
-    const arrayOfTypes = Array.from(typeRef.current.children);
-    const arrayOfSizes = Array.from(sizeRef.current.children);
+    const arrayOfTypes =
+      typeRef.current && Array.from(typeRef.current.children);
+    const arrayOfSizes =
+      sizeRef.current && Array.from(sizeRef.current.children);
     // eslint-disable-next-line array-callback-return
-    arrayOfTypes.map((type) => {
+    arrayOfTypes?.map((type: any) => {
       // eslint-disable-next-line array-callback-return
-      arrayOfSizes.map((size) => {
+      arrayOfSizes?.map((size: any) => {
         if (size.className === "active") {
           if (type.className === "active") {
             dispatch(

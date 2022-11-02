@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import ContentLoader from "react-content-loader";
 import { useWindowWidth } from "@react-hook/window-size";
 
-export default function PizzaSkeleton(props) {
+export default function PizzaSkeleton() {
   const [windowWidth, setWindowWidth] = useState({ width: 0, height: 0 });
   const width = useWindowWidth();
 
@@ -31,7 +31,7 @@ export default function PizzaSkeleton(props) {
       viewBox="0 0 280 500"
       backgroundColor="#f3f3f3"
       foregroundColor="#ecebeb"
-      {...props}
+      // {...props}
     >
       <circle cx="134" cy="134" r="125" />
       <rect x="0" y="279" rx="10" ry="10" width="280" height="23" />
