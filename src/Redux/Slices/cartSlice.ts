@@ -20,9 +20,9 @@ interface cartSliceState {
 }
 
 const initialState: cartSliceState = {
-  totalPrice: getLSData().totalPrice,
-  items: getLSData().items,
-  totalCount: getLSData().totalCount,
+  totalPrice: getLSData().totalPrice || 0,
+  items: getLSData().items || [],
+  totalCount: getLSData().totalCount || 0,
 };
 
 export const cartSlice = createSlice({
